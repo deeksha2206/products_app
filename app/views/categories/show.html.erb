@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @category.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @category.description %>
+</p>
+
+<%tags= @category.tags%>
+<% if tags.present? %>
+	<p>
+	  <%= render 'tags/all_tags', tags: tags %>
+	</p>
+<% end -%>
+<% if @products.present? %>
+	<p>
+	  <%= render 'products/all_products', products: @products %>
+	</p>
+<% end -%>
+
+<%= link_to 'Edit', edit_category_path(@category) %> |
+<%= link_to 'Back', categories_path %>

@@ -1,0 +1,34 @@
+<%= form_with(model: category, local: true) do |form| %>
+  <% if category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+
+      <ul>
+      <% category.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name, 'Name*' %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description, 'Description*' %>
+    <%= form.text_area :description %>
+  </div>
+
+  Available Tags*
+  <br>
+  <%= form.collection_check_boxes :tag_ids, tags, :id, :name do |b| %>
+    <%= b.check_box %>
+    <%= b.label %>
+  <% end -%>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

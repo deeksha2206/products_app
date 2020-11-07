@@ -1,0 +1,59 @@
+<%= form_with(model: product, local: true) do |form| %>
+  <% if product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+      <% product.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name, 'Name*'%>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description, 'Desciption*' %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :brand, 'Brand*' %>
+    <%= form.text_field :brand %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price, 'Price*' %>
+    <%= form.text_field :price %>
+  </div>
+
+  <br>
+  <% if @show_available_tags || action_name == 'new' %>
+    Available Tags
+    <br>
+    <%= form.collection_check_boxes :tag_ids, tags, :id, :name do |b| %>
+      <%= b.check_box %>
+      <%= b.label %>
+    <% end -%>
+  <% end %>
+  <%= form.nested_fields_for :tags do |f| %>
+    <%= f.label :name, 'Tag Name *'%>
+    <%= f.text_field :name, placeholder: "Enter Tag Name" %>
+    <%= f.label :description, 'Tag Desciption*'%>
+    <%= f.text_field :description, placeholder: "Enter Tag Desciption" %>
+    <%= f.remove_nested_fields_link data: { confirm: 'Are you sure?' } do %>
+      <%= 'Remove' %>
+    <% end -%>
+  <% end -%>
+  <%= form.add_nested_fields_link :tags do %>
+    <%= 'Add Tag' %>
+  <% end -%>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
